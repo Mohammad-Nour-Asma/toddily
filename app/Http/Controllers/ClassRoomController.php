@@ -46,7 +46,7 @@ class ClassRoomController extends Controller
     public function show(string $id)
     {
         //
-        
+
         return response(['class'=>ClassRoom::with('children')->find($id)],200);
     }
 

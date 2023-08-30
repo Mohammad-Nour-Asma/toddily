@@ -24,7 +24,6 @@ class SubstatusController extends Controller
         //
         $fields =  $request->validate([
             'name' => 'required|string',
-            'description' => 'required|string',
             'status_id'=> 'required|numeric',
             'image'=> 'required|image'
 
