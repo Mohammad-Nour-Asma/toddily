@@ -20,7 +20,7 @@ class Child extends Model
     }
 
     public function status(){
-        return $this->hasMany(Status::class, 'child_id');
+        return $this->hasMany(ChildStatus::class, 'child_id');
     }
 
     public function classRoom(){

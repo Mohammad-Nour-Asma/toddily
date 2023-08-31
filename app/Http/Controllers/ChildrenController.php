@@ -135,4 +135,14 @@ class ChildrenController extends Controller
         }
         return response(['child_status' =>$child->classRoom->ageSection->status]);
     }
+
+    public function getChildrenStatusDates(string $id){
+        $child = Child::find($id);
+
+        if (!$child) {
+            return response()->json(['message' => 'Image not found'], 404);
+        }
+
+        return response([$child->status]);
+    }
 }

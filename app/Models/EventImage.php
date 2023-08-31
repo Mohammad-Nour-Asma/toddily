@@ -9,10 +9,11 @@ class EventImage extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
     public function setSrcAttribute($src)
     {
-        $newImageName = uniqid().''.'image'.'.'.$src->getClientOriginalExtension();
-        $src->move(public_path('storage/images'),$newImageName);
+        $newImageName = uniqid().''.'image'.'.'.$src->extension();
+        $src->move(public_path('images'),$newImageName);
         return $this->attributes['src'] = '/images/'. $newImageName;
     }
 }

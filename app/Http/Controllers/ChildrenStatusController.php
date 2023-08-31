@@ -48,7 +48,8 @@ class ChildrenStatusController extends Controller
             foreach ($status['substatus'] as $subStatus){
                 ChildSubstatus::create([
                     'childStatus_id'=>$childStatus->id,
-                    'subStatus_id' => $subStatus['substatus_id']
+                    'subStatus_id' => $subStatus['substatus_id'],
+                    'description' => $subStatus['description']
                 ]);
             }
         }

@@ -105,6 +105,7 @@ Route::group(['middleware' => ['auth:sanctum']] , function (){
     Route::get('/get_child_reports/{id}' , [ReportsController::class , 'childReports']);
 
     Route::post('get-child-status-date/{id}' , [ChildrenStatusController::class , 'getStatusByDate']);
+    Route::get('get-dates/{id}' , [ChildrenController::class , 'getChildrenStatusDates']);
     Route::get('get-child-images/{id}' , [ChildImagesController::class , 'getChildImagesForParents']);
 
 });
