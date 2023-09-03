@@ -26,7 +26,7 @@ class AuthController extends Controller
         if (!$user || !Hash::check($fields['password'], $user->password)) {
             return response([
                 'message' => 'The provided credentials are incorrect',
-            ], 401);
+            ], 422);
         }
         $token = $user->createToken('token')->plainTextToken;
 
@@ -94,5 +94,10 @@ class AuthController extends Controller
         return response(['message'=>'Logged out'], 200);
     }
 
+    public function getCurrentUser(Request $request)
+    {
+        $request->user()->role->role_name;
+        return response(['user'=>$request->user()]);
+    }
 
 }

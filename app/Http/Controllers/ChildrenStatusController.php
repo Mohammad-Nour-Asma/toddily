@@ -105,7 +105,7 @@ class ChildrenStatusController extends Controller
 
 
 
-    $courses = $child->course;
+         $courses = $child->course;
         $newrep = $courses->map(function ($item)use ($request){
           $status =   $item->status;
             $filtered = $status->map(function ($item)use ($request) {
@@ -123,5 +123,24 @@ class ChildrenStatusController extends Controller
             'status' => $records,
             'courses'=> $newrep
         ]);
+    }
+
+    public  function  getStatusDates(string $id){
+        $child = Child::find($id);
+        if(!$child){
+            return response(['message'=>'not Found'],400);
+        }
+
+        $data = $child->status->map(function ($item){
+            $date = Carbon::parse($item->created_at);
+            $year = $date->format('Y');
+            $month = $date->format('m');
+            $day = $date->format('d');
+            $formattedDate = $year . '-' . $month . '-' . $day;
+           return ['date'=> $formattedDate];
+        });
+
+        $uniqueDates = collect($data)->unique('date');
+        return response(['data'=>$uniqueDates]);
     }
 }

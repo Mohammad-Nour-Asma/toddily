@@ -44,6 +44,10 @@ Route::apiResource('question-answer' , QuestionAndAnswerController::class)->only
 
 Route::group(['middleware' => ['auth:sanctum']] , function (){
     Route::post('/logout' , [AuthController::class , 'logout']);
+    Route::get('/current-user' , [AuthController::class , 'getCurrentUser']);
+    Route::get('/status-dates/{id}' , [ChildrenStatusController::class , 'getStatusDates']);
+
+
 
     Route::middleware(['admin'])->group(function () {
 
@@ -105,7 +109,6 @@ Route::group(['middleware' => ['auth:sanctum']] , function (){
     Route::get('/get_child_reports/{id}' , [ReportsController::class , 'childReports']);
 
     Route::post('get-child-status-date/{id}' , [ChildrenStatusController::class , 'getStatusByDate']);
-    Route::get('get-dates/{id}' , [ChildrenController::class , 'getChildrenStatusDates']);
     Route::get('get-child-images/{id}' , [ChildImagesController::class , 'getChildImagesForParents']);
 
 });

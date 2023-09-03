@@ -16,9 +16,25 @@ class AccountsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $data =  User::with('role')->get();
+
+
+        if($request->get('search') == 'staff'){
+          $staff = $data->filter(function ($item){return $item->role->role_name != 'parent';});
+
+            return response([
+                'data' => $staff
+            ], 200);
+
+        }else if ($request->get('search') == 'parent'){
+            $parent = $data->filter(function ($item){return $item->role->role_name == 'parent';});
+            return response([
+                'data' => $parent
+            ], 200);
+        }
         return response([
             'data' => User::with('role')->get()
         ], 200);
@@ -35,7 +51,8 @@ class AccountsController extends Controller
         //
         $request -> validate([
             'name'=> 'required|string ',
-            'role_name'=> 'required|string'
+            'role_name'=> 'required|string',
+            'phone'=> 'required|string'
         ]);
 
         // Generate a unique username based on the name
@@ -44,6 +61,7 @@ class AccountsController extends Controller
 
 
         $password = Str::random(8);
+        $password = Str::lower($password);
 
         $role_id = Role::where('role_name' ,$request->get('role_name'))->first()['id'];
 
@@ -57,7 +75,8 @@ class AccountsController extends Controller
             'name' => $request->get('name'),
             'password' => $password,
             'username' => $username,
-            'role_id' => $role_id
+            'role_id' => $role_id,
+            'phone' => $request->get('phone')
         ]);
 
         return response([
